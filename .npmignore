@@ -1,0 +1,7 @@
+.github
+node_modules
+test
+.gitignore
+.prettierrc
+.npmrc
+tsconfig.json

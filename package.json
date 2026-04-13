@@ -1,0 +1,56 @@
+{
+  "name": "auto-cdp",
+  "version": "0.0.1",
+  "description": "Automate your daily Chrome instance via a simple HTTP API. Zero-dependency, native WebSocket support, and automatic port discovery.",
+  "license": "MIT",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "test": "vitest"
+  },
+  "tsup": {
+    "target": "es5",
+    "entry": {
+      "index": "src/index.ts"
+    },
+    "format": [
+      "esm"
+    ],
+    "dts": true,
+    "clean": true,
+    "sourcemap": true,
+    "splitting": false
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.10",
+    "@types/node": "^25.6.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "keywords": [
+    "cdp"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "author": "DBL <me@banli.co>",
+  "homepage": "https://github.com/hey-lee/cdp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hey-lee/cdp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hey-lee/cdp/issues"
+  }
+}
