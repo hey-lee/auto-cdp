@@ -87,10 +87,12 @@ export class CDP {
     const data: CDPResponse = JSON.parse(event.data.toString())
 
     if (data.method === 'Target.attachedToTarget') {
-      this.sessions.set(data.params.targetInfo.targetID, data.params.sessionID)
+      const { targetId, sessionId } = data.params
+      this.sessions.set(data.params.targetInfo.targetId, sessionId)
     } else if (data.method === 'Target.detachedFromTarget') {
+      const { sessionId } = data.params
       for (const [tid, sid] of this.sessions.entries()) {
-        if (sid === data.params.sessionID) {
+        if (sid === sessionId) {
           this.sessions.delete(tid)
           break
         }
@@ -114,6 +116,13 @@ export class CDP {
     this.ws = null
   }
 
+  async close(): Promise<void> {
+    if (this.ws) {
+      this.ws.close()
+      this.handleClose()
+    }
+  }
+
   async send<T = any>(
     method: string,
     params: object = {},
@@ -133,7 +142,7 @@ export class CDP {
 
       this.pendingRequests.set(id, { resolve, reject, timer, method })
       this.ws!.send(
-        JSON.stringify({ id, method, params, ...(sessionID && { sessionID }) })
+        JSON.stringify({ id, method, params, ...(sessionID && { sessionId: sessionID }) })
       )
     })
   }
@@ -142,11 +151,11 @@ export class CDP {
     const existing = this.sessions.get(targetID)
     if (existing) return existing
     const res = await this.send('Target.attachToTarget', {
-      targetID,
+      targetId: targetID,
       flatten: true,
     })
-    const sid = res.result.sessionID
-    this.sessions.set(targetID, sid)
-    return sid
+    const { sessionId } = res.result
+    this.sessions.set(targetID, sessionId)
+    return sessionId
   }
 }

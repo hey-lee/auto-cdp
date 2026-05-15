@@ -15,8 +15,8 @@ export class AutoCDP extends CDP {
 
   async newPage(url: string = 'about:blank'): Promise<Page> {
     const res = await this.send('Target.createTarget', { url })
-    const targetID = res.result.targetID
-    const page = await this.getPage(targetID)
+    const { targetId } = res.result
+    const page = await this.getPage(targetId)
     if (url !== 'about:blank') await page.waitLoad()
     return page
   }
