@@ -1,6 +1,6 @@
 {
   "name": "auto-cdp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Automate your daily Chrome instance via a simple HTTP API. Zero-dependency, native WebSocket support, and automatic port discovery.",
   "license": "MIT",
   "type": "module",
