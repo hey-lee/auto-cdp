@@ -1,11 +1,14 @@
 {
   "name": "auto-cdp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Automate your daily Chrome instance via a simple HTTP API. Zero-dependency, native WebSocket support, and automatic port discovery.",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "auto-cdp": "dist/cli.js"
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
@@ -13,9 +16,10 @@
   },
   "tsup": {
     "target": "es5",
-    "entry": {
-      "index": "src/index.ts"
-    },
+    "entry": [
+      "src/cli.ts",
+      "src/index.ts"
+    ],
     "format": [
       "esm"
     ],
@@ -52,5 +56,8 @@
   },
   "bugs": {
     "url": "https://github.com/hey-lee/cdp/issues"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
   }
 }
